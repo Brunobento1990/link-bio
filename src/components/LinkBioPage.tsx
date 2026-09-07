@@ -54,10 +54,21 @@ function atualizarMetadados(configuracao: LinkBioPaginaPublica) {
 }
 
 function LinkBioContent({ configuracao }: { configuracao: LinkBioPaginaPublica }) {
-  const { backgroundColor, borderRadius, cores, getContrastText, shadow } = useThemeApp()
+  const {
+    backgroundColor,
+    borderRadius,
+    colorWithOpacity,
+    cores,
+    getContrastText,
+    shadow,
+  } = useThemeApp()
   const links = [...configuracao.links].sort((a, b) => a.ordem - b.ordem)
   const fundo = configuracao.corDeFundo || backgroundColor.default
   const principal = configuracao.corPrincipal || cores.primary
+  const texto = getContrastText(fundo)
+  const sombraTexto = configuracao.backgroundImage
+    ? `0 1px 4px ${colorWithOpacity(getContrastText(texto), 0.75)}`
+    : undefined
 
   return (
     <BoxApp
@@ -90,18 +101,31 @@ function LinkBioContent({ configuracao }: { configuracao: LinkBioPaginaPublica }
           src={formatarImagemBase64(configuracao.logo)}
           sx={{ bgcolor: principal, boxShadow: shadow, height: 88, width: 88 }}
         />
-        <TextApp align={TextAppAlign.Center} size={TextAppSize.Large} weight={TextAppWeight.Bold}>
+        <TextApp
+          align={TextAppAlign.Center}
+          color={texto}
+          size={TextAppSize.Large}
+          sx={{ textShadow: sombraTexto }}
+          weight={TextAppWeight.Bold}
+        >
           {configuracao.nomeFantasia}
         </TextApp>
         <TextApp
           align={TextAppAlign.Center}
+          color={texto}
           fontSize="clamp(1.8rem, 6vw, 2.5rem)"
+          sx={{ textShadow: sombraTexto }}
           weight={TextAppWeight.Bold}
         >
           {configuracao.titulo}
         </TextApp>
         {configuracao.descricao && (
-          <TextApp align={TextAppAlign.Center} fontSize="1rem" sx={{ whiteSpace: 'pre-line' }}>
+          <TextApp
+            align={TextAppAlign.Center}
+            color={texto}
+            fontSize="1rem"
+            sx={{ textShadow: sombraTexto, whiteSpace: 'pre-line' }}
+          >
             {configuracao.descricao}
           </TextApp>
         )}
@@ -146,7 +170,11 @@ function LinkBioContent({ configuracao }: { configuracao: LinkBioPaginaPublica }
         </BoxApp>
 
         {links.length === 0 && (
-          <TextApp align={TextAppAlign.Center} color={TextAppColor.Secondary}>
+          <TextApp
+            align={TextAppAlign.Center}
+            color={texto}
+            sx={{ textShadow: sombraTexto }}
+          >
             Nenhum link disponível.
           </TextApp>
         )}
