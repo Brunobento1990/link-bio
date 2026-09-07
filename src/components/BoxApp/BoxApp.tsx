@@ -1,0 +1,124 @@
+import { Box } from '@mui/material'
+import type { BoxAppProps } from './boxAppTypes'
+import { BoxAppComponent } from './boxAppTypes'
+
+export function BoxApp({
+  alt,
+  children,
+  component = BoxAppComponent.Div,
+  display,
+  flexDirection,
+  alignItems,
+  justifyContent,
+  textAlign,
+  placeItems,
+  flex,
+  gap,
+  width,
+  maxWidth,
+  height,
+  minWidth,
+  minHeight,
+  objectFit,
+  p,
+  padding,
+  px,
+  py,
+  pl,
+  pr,
+  pt,
+  pb,
+  m,
+  mx,
+  my,
+  ml,
+  mr,
+  mt,
+  mb,
+  border,
+  borderTop,
+  borderRight,
+  borderBottom,
+  borderLeft,
+  borderColor,
+  borderRadius,
+  background,
+  backgroundColor,
+  color,
+  boxShadow,
+  boxSizing,
+  overflow,
+  textDecoration,
+  transform,
+  transition,
+  className,
+  noValidate,
+  onSubmit,
+  role,
+  src,
+  sx,
+  title,
+}: BoxAppProps) {
+
+  return (
+    <Box
+      alt={alt}
+      className={className}
+      component={component}
+      noValidate={noValidate}
+      onSubmit={onSubmit}
+      role={role}
+      src={src}
+      title={title}
+      sx={[{
+        display,
+        flex,
+        flexDirection,
+        alignItems,
+        justifyContent,
+        textAlign,
+        placeItems,
+        gap,
+        width,
+        maxWidth,
+        height,
+        minWidth,
+        minHeight,
+        objectFit,
+        p,
+        padding,
+        px,
+        py,
+        pl,
+        pr,
+        pt,
+        pb,
+        m,
+        mx,
+        my,
+        ml,
+        mr,
+        mt,
+        mb,
+        border,
+        borderTop,
+        borderRight,
+        borderBottom,
+        borderLeft,
+        borderColor,
+        borderRadius,
+        background: background,
+        backgroundColor,
+        color,
+        boxShadow,
+        boxSizing,
+        overflow,
+        textDecoration,
+        transform,
+        transition,
+      }, ...(Array.isArray(sx) ? sx : [sx])]}
+    >
+      {children}
+    </Box>
+  )
+}

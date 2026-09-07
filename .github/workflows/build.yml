@@ -1,0 +1,33 @@
+name: Docker Image CI
+
+on:
+  push:
+    tags:
+      - "*.*.*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      TAG: ${{ github.ref_name }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Login Docker Hub
+        run: echo "${{ secrets.DOCKER_HUB_KEY }}" | docker login -u brunobentocaina --password-stdin
+
+      - name: Make envfile
+        env:
+          VITE_API_URL: ${{ secrets.URL_API }}
+        run: |
+          printf 'VITE_API_URL=%s\n' "$VITE_API_URL" > .env.production
+
+      - name: Build Image
+        run: |
+          docker build . -t brunobentocaina/open-adm-ui-link-bio:$TAG
+
+      - name: Push
+        run: |
+          docker push brunobentocaina/open-adm-ui-link-bio:$TAG
