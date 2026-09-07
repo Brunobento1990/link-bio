@@ -178,6 +178,14 @@ function LinkBioContent({ configuracao }: { configuracao: LinkBioPaginaPublica }
             Nenhum link disponível.
           </TextApp>
         )}
+        <TextApp
+          align={TextAppAlign.Center}
+          color={colorWithOpacity(texto, 0.72)}
+          fontSize="0.75rem"
+          sx={{ mt: 3, textShadow: sombraTexto }}
+        >
+          © {new Date().getFullYear()} {configuracao.nomeFantasia}. Todos os direitos reservados.
+        </TextApp>
       </BoxApp>
     </BoxApp>
   )
