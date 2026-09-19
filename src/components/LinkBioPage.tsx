@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { obterConfiguracaoPublica } from '../api/linkBioApi'
+import { obterConfiguracaoPublica, registrarClique } from '../api/linkBioApi'
 import { obterCorIconeLinkBio } from '../config/linkBioIconColors'
 import { useThemeApp } from '../hook/useThemeApp'
 import type { LinkBioPaginaPublica } from '../types/LinkBioTypes'
@@ -69,6 +69,11 @@ function LinkBioContent({ configuracao }: { configuracao: LinkBioPaginaPublica }
   const sombraTexto = configuracao.backgroundImage
     ? `0 1px 4px ${colorWithOpacity(getContrastText(texto), 0.75)}`
     : undefined
+
+  function abrirLink(linkId: string, url: string) {
+    void registrarClique(linkId).catch(() => undefined)
+    window.open(url, '_blank', 'noopener,noreferrer')
+  }
 
   return (
     <BoxApp
@@ -141,7 +146,7 @@ function LinkBioContent({ configuracao }: { configuracao: LinkBioPaginaPublica }
             <ButtonApp
               fullWidth
               key={link.id}
-              onClick={() => window.open(link.url, '_blank', 'noopener,noreferrer')}
+              onClick={() => abrirLink(link.id, link.url)}
               size={ButtonAppSize.Large}
               startIcon={
                 link.icone ? (
